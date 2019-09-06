@@ -65,11 +65,11 @@ if __name__ == '__main__':
         # too lazy to use csv module
         product_id = re.match(r'^([^,]*)', product).group(1)
         assert product_id, 'product_id is undefined'
-        title, image, price = get_info(product_id)
-        logging.info('got product info: %s "%s": %s CHF' % (product_id, title, price))
+        brand, title, image, price = get_info(product_id)
+        logging.info('got product info: %s "%s %s": %s CHF' % (product_id, brand, title, price))
         update_price(product_id, price)
         # update products.csv with title, last price and image
         # 'title' may contains commas
-        content[i] = '%s,"%s",%s,%s' % (product_id, title.replace('"', '""'), price, image)
+        content[i] = '%s,"%s %s",%s,%s' % (product_id, brand, title.replace('"', '""'), price, image)
 
     push_commit(entry.get('path'), '\n'.join(content), '[skip ci] Update products.csv', entry.get('sha'))
