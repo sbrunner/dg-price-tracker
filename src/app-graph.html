@@ -73,7 +73,13 @@
 
         const graph = d3.select(this.$.graph).transition();
 
-        // // x axis
+        if (period < 40) {
+          this.xaxis.ticks(d3.timeDay);
+        } else {
+          this.xaxis.ticks(d3.timeMonth);
+        }
+
+        // x axis
         graph.select('.x-axis')
           .call(this.xaxis);
 
@@ -104,7 +110,7 @@
         this.x = d3.scaleTime().range([0, width]);
         this.y = d3.scaleLinear().range([height, 0]);
 
-        this.xaxis = d3.axisBottom(this.x).ticks(d3.timeDay.every(10));
+        this.xaxis = d3.axisBottom(this.x).ticks(d3.timeMounth);
         this.yaxis = d3.axisLeft(this.y);
 
         this.plot();
