@@ -11,12 +11,23 @@ on:
 
 jobs:
   all:
-    runs-on: ubuntu-latest
+    name: Update prices
+    runs-on: ubuntu-20.04
+    timeout-minutes: 15
+    if: "!startsWith(github.event.head_commit.message, '[skip ci] ')"
+
     steps:
-    - uses: actions/checkout@master
-    - name: Build the Docker image
-      run: docker build -t dg_updater updater/
-    - name: Update prices
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: docker run -e GITHUB_TOKEN=$GITHUB_TOKEN dg_updater
+      - uses: actions/checkout@v2
+
+      - run: sudo python3 -m pip install --requirement=ci/requirements.txt
+
+      - name: Checks
+        run: c2cciutils-checks
+
+      - name: Build the Docker image
+        run: docker build --tag=dg_updater updater/
+
+      - name: Update prices
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: docker run --env=GITHUB_TOKEN=$GITHUB_TOKEN dg_updater
