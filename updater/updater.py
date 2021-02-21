@@ -8,9 +8,15 @@ import re
 import requests
 from product import get_info
 
+<<<<<<< HEAD
 CONTENTS_API_URL = "https://api.github.com/repos/sbrunner/dg-price-tracker/contents/%s?ref=gh-pages"
 
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
+=======
+CONTENTS_API_URL = 'https://api.github.com/repos/sbrunner/dg-price-tracker/contents/%s?ref=gh-pages'
+
+GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
+>>>>>>> Add log
 
 session = requests.Session()
 if GITHUB_TOKEN is not None:
@@ -60,6 +66,7 @@ if __name__ == "__main__":
     content = session.get(entry.get("download_url")).text.split("\n")
     content = list(filter(None, content))
     for i, product in enumerate(content[1:], 1):
+        logging.info(product)
         # too lazy to use csv module
         product_id = re.match(r"^([^,]*)", product).group(1)
         assert product_id, "product_id is undefined"
