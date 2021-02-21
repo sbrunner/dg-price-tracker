@@ -6,8 +6,10 @@ import os
 import re
 
 import requests
+
 from product import get_info
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 CONTENTS_API_URL = "https://api.github.com/repos/sbrunner/dg-price-tracker/contents/%s?ref=gh-pages"
 
@@ -17,6 +19,11 @@ CONTENTS_API_URL = 'https://api.github.com/repos/sbrunner/dg-price-tracker/conte
 
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
 >>>>>>> Add log
+=======
+CONTENTS_API_URL = "https://api.github.com/repos/sbrunner/dg-price-tracker/contents/%s?ref=gh-pages"
+
+GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
+>>>>>>> Run black
 
 session = requests.Session()
 if GITHUB_TOKEN is not None:
