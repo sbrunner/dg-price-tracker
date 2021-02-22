@@ -9,21 +9,11 @@ import requests
 
 from product import get_info
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 CONTENTS_API_URL = "https://api.github.com/repos/sbrunner/dg-price-tracker/contents/%s?ref=gh-pages"
 
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
-=======
-CONTENTS_API_URL = 'https://api.github.com/repos/sbrunner/dg-price-tracker/contents/%s?ref=gh-pages'
 
-GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
->>>>>>> Add log
-=======
-CONTENTS_API_URL = "https://api.github.com/repos/sbrunner/dg-price-tracker/contents/%s?ref=gh-pages"
-
-GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
->>>>>>> Run black
+LOG = logging.getLogger(__name__)
 
 session = requests.Session()
 if GITHUB_TOKEN is not None:
@@ -48,7 +38,7 @@ def update_price(product_id, price):
     sha = None
     entry = session.get(CONTENTS_API_URL % path)
     if entry.status_code == 404:
-        logging.info("create price file for %s" % product_id)
+        LOG.info("create price file for %s" % product_id)
         prices = ["date,price"]
     else:
         meta = entry.json()
@@ -63,7 +53,7 @@ def update_price(product_id, price):
         prices.append("%s,%s" % (today, price))
         push_commit(path, "\n".join(prices), "[skip ci] Update product price", sha)
     else:
-        logging.info("no change for %s" % product_id)
+        LOG.info("no change for %s" % product_id)
 
 
 if __name__ == "__main__":
@@ -73,12 +63,12 @@ if __name__ == "__main__":
     content = session.get(entry.get("download_url")).text.split("\n")
     content = list(filter(None, content))
     for i, product in enumerate(content[1:], 1):
-        logging.info(product)
+        LOG.info(product)
         # too lazy to use csv module
         product_id = re.match(r"^([^,]*)", product).group(1)
         assert product_id, "product_id is undefined"
         brand, title, image, price = get_info(product_id)
-        logging.info('got product info: %s "%s %s": %s CHF' % (product_id, brand, title, price))
+        LOG.info('got product info: %s "%s %s": %s CHF' % (product_id, brand, title, price))
         update_price(product_id, price)
         # update products.csv with title, last price and image
         # 'title' may contains commas
