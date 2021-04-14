@@ -22,6 +22,8 @@ jobs:
 
       - name: Checks
         run: c2cciutils-checks
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Build the Docker image
         run: docker build --tag=dg_updater updater/
