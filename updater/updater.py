@@ -6,7 +6,6 @@ import os
 import re
 
 import requests
-
 from product import get_info
 
 CONTENTS_API_URL = "https://api.github.com/repos/sbrunner/dg-price-tracker/contents/%s?ref=gh-pages"
