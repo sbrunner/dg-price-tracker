@@ -50,7 +50,7 @@ def update_price(product_id, price):
     last = prices[-1]
     # avoid duplicated entries for the same day
     if not (last.startswith(today) and last.endswith(str(price))):
-        prices.append("%s,%s" % (today, price))
+        prices.append(f"{today},{price}")
         push_commit(path, "\n".join(prices), "[skip ci] Update product price", sha)
     else:
         LOG.info("no change for %s" % product_id)
@@ -68,10 +68,10 @@ if __name__ == "__main__":
         product_id = re.match(r"^([^,]*)", product).group(1)
         assert product_id, "product_id is undefined"
         brand, title, image, price = get_info(product_id)
-        LOG.info('got product info: %s "%s %s": %s CHF' % (product_id, brand, title, price))
+        LOG.info(f'got product info: {product_id} "{brand} {title}": {price} CHF')
         update_price(product_id, price)
         # update products.csv with title, last price and image
         # 'title' may contains commas
-        content[i] = '%s,"%s %s",%s,%s' % (product_id, brand, title.replace('"', '""'), price, image)
+        content[i] = '{},"{} {}",{},{}'.format(product_id, brand, title.replace('"', '""'), price, image)
 
     push_commit(entry.get("path"), "\n".join(content), "[skip ci] Update products.csv", entry.get("sha"))
