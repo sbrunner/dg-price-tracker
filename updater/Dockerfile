@@ -5,4 +5,4 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 
 ADD *.py /app/
 
-CMD python /app/updater.py
+CMD ["python", "/app/updater.py"]
