@@ -1,0 +1,14 @@
+version: 2
+updates:
+  - package-ecosystem: pip
+    directory: '/'
+    schedule:
+      interval: monthly
+    ignore:
+      - dependency-name: none
+  - package-ecosystem: docker
+    directory: '/updater'
+    schedule:
+      interval: monthly
+    ignore:
+      - dependency-name: none
