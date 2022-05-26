@@ -6,6 +6,7 @@ on:
 
 env:
   IN_CI: '1'
+  DOCKER_BUILDKIT: '1'
 
 jobs:
   build:
