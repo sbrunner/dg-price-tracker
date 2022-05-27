@@ -6,6 +6,9 @@ on:
   schedule:
     - cron: 0 4 * * *
 
+env:
+  DOCKER_BUILDKIT: '1'
+
 jobs:
   all:
     name: Update prices
