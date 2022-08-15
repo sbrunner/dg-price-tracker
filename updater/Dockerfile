@@ -6,7 +6,8 @@ RUN --mount=type=cache,target=/var/lib/apt/lists \
     && apt-get upgrade --yes
 
 COPY requirements.txt /app/
-RUN pip install --no-cache-dir -r /app/requirements.txt
+RUN --mount=type=cache,target=/root/.cache \
+    pip install --disable-pip-version-check --requirement=/app/requirements.txt
 
 COPY *.py /app/
 
