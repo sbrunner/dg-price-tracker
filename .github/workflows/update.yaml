@@ -16,7 +16,7 @@ jobs:
     timeout-minutes: 15
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
 
       - name: Build the Docker image
         run: docker build --tag=dg_updater updater/
