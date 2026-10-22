@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.15-slim
 
 RUN --mount=type=cache,target=/var/lib/apt/lists \
     --mount=type=cache,target=/var/cache,sharing=locked \
